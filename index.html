@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Lighthouse Morse — Trincomalee Bay</title>
+<link rel="stylesheet" href="scene.css">
+</head>
+<body>
+  <header class="statusbar">
+    <div class="room">ROOM <strong id="roomCode">—</strong></div>
+    <button id="btnNewRoom" title="generate a new room code">new room</button>
+    <div class="conn"><span id="connDot" class="dot"></span><span id="connText">connecting…</span></div>
+    <div class="meta">last signal <strong id="lastSignal">—</strong></div>
+  </header>
+
+  <main>
+    <section class="stage" id="stage">
+      <div class="sky"></div>
+      <div class="stars" id="stars"></div>
+      <div class="bay-label">TRINCOMALEE BAY · NIGHT</div>
+      <aside class="pairing" aria-label="Phone pairing QR code">
+        <a id="phoneQrLink" href="phone.html" aria-label="Open the phone signal key">
+          <img id="phoneQr" alt="QR code to join this lighthouse room on a phone">
+        </a>
+        <span>SCAN TO JOIN</span>
+        <strong id="qrRoomCode">—</strong>
+      </aside>
+      <svg class="art" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="beamGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ffe9a8" stop-opacity="0.9"/>
+            <stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="seaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0a2445"/>
+            <stop offset="1" stop-color="#04101f"/>
+          </linearGradient>
+        </defs>
+
+        <!-- dark sea -->
+        <rect x="0" y="360" width="1200" height="280" fill="url(#seaGrad)"/>
+        <g class="sheen" stroke="#28548a" stroke-width="3" stroke-linecap="round">
+          <line x1="380" y1="430" x2="560" y2="430"/>
+          <line x1="640" y1="480" x2="850" y2="480"/>
+          <line x1="470" y1="530" x2="700" y2="530"/>
+          <line x1="820" y1="415" x2="990" y2="415"/>
+        </g>
+
+        <!-- rocks -->
+        <path fill="#0b111d" d="M0,640 L0,470 L70,430 L150,445 L215,415 L300,455 L360,530 L420,640 Z"/>
+        <path fill="#121a2b" d="M60,640 L110,520 L200,505 L280,545 L330,640 Z"/>
+
+        <!-- lighthouse -->
+        <g id="lighthouse">
+          <path fill="#e9e4d8" d="M196,430 L208,214 L244,214 L256,430 Z"/>
+          <path fill="#b3402f" d="M203,368 L249,368 L252,400 L200,400 Z"/>
+          <path fill="#b3402f" d="M208,282 L244,282 L246,314 L206,314 Z"/>
+          <rect x="200" y="200" width="52" height="16" rx="3" fill="#2b3550"/>
+          <rect x="209" y="166" width="34" height="36" rx="2" fill="#141d31" stroke="#3a4a72" stroke-width="2"/>
+          <path fill="#202a44" d="M205,166 L226,142 L247,166 Z"/>
+          <circle id="lamp" class="lamp" cx="226" cy="184" r="11" fill="#39415c"/>
+          <polygon id="beam" class="beam" points="238,184 1200,96 1200,290" fill="url(#beamGrad)"/>
+        </g>
+      </svg>
+    </section>
+
+    <section class="signal">
+      <div class="label">decoded message</div>
+      <div class="line"><span id="done" class="done"></span><span id="current" class="current"></span><span class="caret"></span></div>
+      <div class="raw-line"><span class="raw-label">MORSE</span><span id="morseInput">—</span></div>
+      <div class="hint" id="hint">Waiting for the phone… open <b>phone.html</b> and enter this room code.</div>
+
+      <div class="translations">
+        <div class="tr-row"><span class="lang">EN</span><span id="trEn" class="tr-text">—</span></div>
+        <div class="tr-row"><span class="lang">TA</span><span id="trTa" class="tr-text">—</span></div>
+        <div class="tr-row"><span class="lang">SI</span><span id="trSi" class="tr-text">—</span></div>
+        <div class="translation-note">Machine suggestions · verify Tamil and Sinhala before sharing.</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mqtt@5/dist/mqtt.min.js"></script>
+  <script src="link.js"></script>
+  <script src="morse.js"></script>
+  <script src="scene.js"></script>
+</body>
+</html>

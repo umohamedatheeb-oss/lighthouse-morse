@@ -1,0 +1,172 @@
+/* Lighthouse Morse — laptop night scene */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  background: #050a14;
+  color: #dce7ff;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ---------- status bar ---------- */
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 10px 22px;
+  background: #070d1c;
+  border-bottom: 1px solid #16233f;
+  font-size: 14px;
+}
+.room { letter-spacing: 1px; color: #7f9ccc; }
+.room strong {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 22px;
+  letter-spacing: 3px;
+  color: #ffd98a;
+  margin-left: 6px;
+}
+.statusbar button {
+  background: #12203c;
+  border: 1px solid #24406f;
+  color: #cfe0ff;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.statusbar button:hover { background: #1a2c52; }
+.conn { display: flex; align-items: center; gap: 8px; color: #8fb0e0; }
+.dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #e0a13a;
+  box-shadow: 0 0 8px currentColor;
+}
+.dot.connected { background: #39d98a; }
+.dot.error { background: #ff6b6b; }
+.dot.reconnecting { background: #e0a13a; }
+.meta { margin-left: auto; color: #6d87b3; }
+.meta strong { color: #cfe0ff; }
+
+/* ---------- stage ---------- */
+main { flex: 1; display: flex; flex-direction: column; }
+.stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 44vh;
+  overflow: hidden;
+}
+.sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(#02040c 0%, #071430 55%, #0b2148 78%, #103257 100%);
+}
+.stars i {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: twinkle 3s ease-in-out infinite;
+}
+@keyframes twinkle { 0%, 100% { opacity: 0.75; } 50% { opacity: 0.12; } }
+.bay-label {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: rgba(160, 190, 235, 0.45);
+  z-index: 2;
+}
+.pairing {
+  position: absolute;
+  z-index: 3;
+  top: 42px;
+  right: 18px;
+  width: 132px;
+  padding: 8px;
+  border: 1px solid rgba(143, 176, 224, 0.35);
+  background: rgba(5, 10, 20, 0.88);
+  text-align: center;
+}
+.pairing a { display: block; background: #fff; line-height: 0; }
+.pairing img { display: block; width: 100%; height: auto; aspect-ratio: 1; }
+.pairing span { display: block; margin-top: 7px; color: #8fb0e0; font-size: 9px; letter-spacing: 1.5px; }
+.pairing strong { display: block; margin-top: 3px; color: #ffd98a; font: 11px Consolas, "Courier New", monospace; letter-spacing: 1px; }
+.art { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sheen line { animation: sheen 4s ease-in-out infinite; }
+.sheen line:nth-child(2) { animation-delay: 1.2s; }
+.sheen line:nth-child(3) { animation-delay: 2.1s; }
+.sheen line:nth-child(4) { animation-delay: 3s; }
+@keyframes sheen { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.65; } }
+
+.lamp { fill: #39415c; }
+.lamp.on {
+  fill: #fff6cf;
+  filter: drop-shadow(0 0 10px #ffdf8f) drop-shadow(0 0 34px rgba(255, 214, 130, 0.9));
+}
+.beam { opacity: 0; transition: opacity 60ms linear; }
+.beam.on { opacity: 0.55; }
+
+/* ---------- signal readout ---------- */
+.signal {
+  background: #070d1c;
+  border-top: 1px solid #16233f;
+  padding: 16px 24px 22px;
+}
+.label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #5f7db1;
+  margin-bottom: 8px;
+}
+.line {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: clamp(30px, 5vw, 58px);
+  line-height: 1.25;
+  min-height: 1.25em;
+  word-break: break-word;
+}
+.done { color: #526f9f; }
+.current { color: #ffd98a; }
+.caret {
+  display: inline-block;
+  width: 0.45ch;
+  height: 0.9em;
+  background: #ffd98a;
+  vertical-align: text-bottom;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.raw-line { margin-top: 5px; color: #8fb0e0; font: 14px Consolas, "Courier New", monospace; }
+.raw-label { margin-right: 12px; color: #5f7db1; font: 10px "Segoe UI", system-ui, sans-serif; letter-spacing: 2px; }
+.hint { margin-top: 8px; font-size: 14px; color: #7e9ac8; min-height: 1.4em; }
+.hint b { color: #cfe0ff; }
+
+.translations {
+  margin-top: 14px;
+  border-top: 1px dashed #1c2c4d;
+  padding-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+.tr-row { display: flex; gap: 14px; align-items: baseline; font-size: clamp(16px, 2vw, 22px); }
+.lang { font-size: 11px; letter-spacing: 2px; color: #5f7db1; width: 28px; }
+.tr-text { color: #9db6dd; overflow-wrap: anywhere; }
+.translation-note { color: #6d87b3; font-size: 12px; margin-top: 4px; }
+
+@media (max-width: 700px) {
+  .statusbar { gap: 12px; }
+  .meta { margin-left: 0; }
+  .signal { padding: 12px 14px 18px; }
+  .pairing { top: 42px; right: 10px; width: 92px; padding: 5px; }
+  .pairing span { margin-top: 4px; font-size: 8px; letter-spacing: 1px; }
+  .pairing strong { font-size: 9px; }
+}

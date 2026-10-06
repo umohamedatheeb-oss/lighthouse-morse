@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Lighthouse Key — Morse signal</title>
+<link rel="stylesheet" href="phone.css">
+</head>
+<body>
+  <div class="flash" id="flash"></div>
+
+  <header>
+    <div class="brand"><span class="bulb"></span> Lighthouse Key</div>
+    <div class="conn"><span class="dot" id="connDot"></span><span id="connText">connecting…</span> · RTT <b id="rtt">—</b></div>
+  </header>
+
+  <section class="roombar">
+    <label for="roomInput">Room</label>
+    <input id="roomInput" type="text" maxlength="12" autocapitalize="characters"
+           autocomplete="off" spellcheck="false" placeholder="TRIN-XXXX">
+    <button id="btnJoin">Join</button>
+  </section>
+
+  <nav class="mode-switch" role="group" aria-label="Signal entry mode">
+    <button id="btnClassicMode" class="mode-option selected" type="button" aria-pressed="true">3 KEYS</button>
+    <button id="btnOneMode" class="mode-option" type="button" aria-pressed="false">ONE KEY</button>
+  </nav>
+
+  <main class="keys" id="keys">
+    <button class="key dash" id="btnDash"><b>—</b><span>DASH</span></button>
+    <button class="key dot" id="btnDot"><b>•</b><span>DOT</span></button>
+    <button class="key space" id="btnSpace"><b>␣</b><span>SPACE <i>ends a letter</i></span></button>
+    <button class="key tap-key" id="btnTap" type="button" hidden aria-label="Tap briefly for dot or hold for dash">
+      <b>•</b><span>SIGNAL</span><small>tap dot · hold dash</small>
+    </button>
+  </main>
+
+  <footer class="actions">
+    <button class="send" id="btnSend">SEND</button>
+    <button class="reset" id="btnReset">reset</button>
+  </footer>
+
+  <aside class="sheet">
+    <h2>International Morse · A–Z</h2>
+    <ul>
+      <li><b>A</b> · —</li><li><b>B</b> — · · ·</li><li><b>C</b> — · — ·</li><li><b>D</b> — · ·</li>
+      <li><b>E</b> ·</li><li><b>F</b> · · — ·</li><li><b>G</b> — — ·</li><li><b>H</b> · · · ·</li>
+      <li><b>I</b> · ·</li><li><b>J</b> · — — —</li><li><b>K</b> — · —</li><li><b>L</b> · — · ·</li>
+      <li><b>M</b> — —</li><li><b>N</b> — ·</li><li><b>O</b> — — —</li><li><b>P</b> · — — ·</li>
+      <li><b>Q</b> — — · —</li><li><b>R</b> · — ·</li><li><b>S</b> · · ·</li><li><b>T</b> —</li>
+      <li><b>U</b> · · —</li><li><b>V</b> · · · —</li><li><b>W</b> · — —</li><li><b>X</b> — · · —</li>
+      <li><b>Y</b> — · — —</li><li><b>Z</b> — — · ·</li>
+    </ul>
+    <p id="modeInstructions">Tap Dot / Dash to build a letter. Space ends the letter; Send ends the word.</p>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/mqtt@5/dist/mqtt.min.js"></script>
+  <script src="link.js"></script>
+  <script src="phone.js"></script>
+</body>
+</html>
